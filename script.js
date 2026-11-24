@@ -673,3 +673,49 @@ function formatTime(seconds) {
 }
 
 renderView();
+// Gerar Favicon PNG dinamicamente (funciona inclusive em file:///)
+(function setNorseFavicon() {
+    const c = document.createElement('canvas');
+    c.width = 64;
+    c.height = 64;
+    const ctx = c.getContext('2d');
+
+    // Madeira do escudo
+    ctx.beginPath();
+    ctx.arc(32, 32, 29, 0, Math.PI * 2);
+    ctx.fillStyle = '#47301d';
+    ctx.fill();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#383532';
+    ctx.stroke();
+
+    // Cúpula central de ferro
+    ctx.beginPath();
+    ctx.arc(32, 32, 13, 0, Math.PI * 2);
+    ctx.fillStyle = '#24201d';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#14110f';
+    ctx.stroke();
+
+    // Runa Algiz dourada
+    ctx.strokeStyle = '#d4a359';
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(32, 22);
+    ctx.lineTo(32, 42);
+    ctx.moveTo(32, 31);
+    ctx.lineTo(25, 25);
+    ctx.moveTo(32, 31);
+    ctx.lineTo(39, 25);
+    ctx.stroke();
+
+    // Remove ícones antigos e aplica o novo PNG
+    document.querySelectorAll("link[rel*='icon']").forEach(el => el.remove());
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/png';
+    link.href = c.toDataURL('image/png');
+    document.head.appendChild(link);
+})();
